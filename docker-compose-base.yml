@@ -1,0 +1,35 @@
+version: "3"
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
+    volumes:
+      - .:/app
+      - ./logs:/app/logs
+    networks:
+      - app
+    command: gunicorn -w 4 -b 0.0.0.0:5000 run:app
+    restart: always
+  mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_DATABASE=app
+      - MYSQL_ROOT_PASSWORD=default
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app
+    restart: always
+
+volumes:
+  mysql_data:
+
+networks:
+  app:

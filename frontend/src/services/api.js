@@ -10,6 +10,8 @@ const api = axios.create({
 });
 
 // Interceptor para adicionar o token JWT ao cabeçalho de todas as requisições
+// Não é necessário enviar o token dessa forma em todas as requisições por conta do token estar em cookie,
+// mas por motivos de personalização e flexibilidade sobre os interceptors do axios, realizei dessa forma.
 api.interceptors.request.use(
   config => {
     const token = getTokenFromCookie();

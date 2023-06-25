@@ -1,4 +1,4 @@
-# Micro Framework Base para meus aplicativos em flask
+# Micro Framework API Rest com JWT Token e frontend em Vue.js
 
 Surgiu a necessidade de uma aplicação em flask para autenticar usuários via jwt, portanto criei este micro-framework com migrations, models e controllers
 para facilitar o meu uso diário com desenvolvimento.
@@ -12,7 +12,7 @@ para facilitar o meu uso diário com desenvolvimento.
 
 As seguintes ferramentas foram usadas na
 ## Pré-requisitos
-
+- [Node]
 - [Python]
 - [Windows, Mac, Linux]
 
@@ -27,14 +27,19 @@ As seguintes ferramentas foram usadas na
 2. Instale as dependencias
 ```bash
     pip install -r requirements.txt
+    npm install
+    npm run build
+
+    # Inicie o ambiente de desenvolvimento com
+    npm run dev
    ```
 
 3. Faça bom uso...
-- Dentro da pasta app contém exemplos de utilização do framework.
+- Dentro da pasta App contém exemplos de utilização do framework.
+- Dentro da pasta frontend contém um frontend de exemplo que autentica usuários utilizando Jwt Token
 
 ## Como contribuir?
 Faça um fork do projeto e crie uma branch
-
 
 ## Licença
 [MIT](https://choosealicense.com/licenses/mit/)
