@@ -63,3 +63,4 @@ def delete_user(user_id):
         db.session.rollback()
         error_message = Utils.get_error_message(e)
         return False, error_message
+    

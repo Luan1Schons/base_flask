@@ -1,13 +1,28 @@
 from flask import Blueprint, jsonify, request
 from app.helpers.json import Json
 from app.controllers.user_controller import create_user, get_user, update_user, delete_user
-from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
+from flask_jwt_extended import get_jwt_identity
+from app.helpers.jwt import validate_token
 
 # Cria um objeto Blueprint para usuários
 users_bp = Blueprint('users', __name__)
 
+@users_bp.route('/user', methods=['GET'])
+@validate_token
+def details_logged_user_route():
+    # Obter dados da requisição
+    current_user = get_jwt_identity()
+    # Chamar a função de criação de usuário do controller
+    user = get_user(current_user)
+    
+    # Verificar se o usuário foi encontrado
+    if user:
+        return Json.response(data=user, status_code=200)
+    else:
+        return Json.response(message='Usuario não encontrado.', status_code=404)
+
 @users_bp.route('/users', methods=['POST'])
-@jwt_required()
+@validate_token
 def create_user_route():
     # Obter dados da requisição
     username = request.json['username']
@@ -23,7 +38,7 @@ def create_user_route():
         return Json.response(message='Erro ao criar usuário', status_code=422, error=error_message)
 
 @users_bp.route('/users/<int:user_id>', methods=['GET'])
-@jwt_required()
+@validate_token
 def get_user_route(user_id):
 
     user = get_user(user_id)
@@ -35,7 +50,7 @@ def get_user_route(user_id):
         return Json.response(message='Usuario não encontrado.', status_code=404)
 
 @users_bp.route('/users/<int:user_id>', methods=['PUT'])
-@jwt_required()
+@validate_token
 def update_user_route(user_id):
     # Obter dados da requisição
     username = request.json['username']
@@ -50,7 +65,7 @@ def update_user_route(user_id):
         return Json.response(message='Erro ao atualizar usuário', status_code=422, error=error_message)
 
 @users_bp.route('/users/<int:user_id>', methods=['DELETE'])
-@jwt_required()
+@validate_token
 def delete_user_route(user_id):
     # Chamar a função de exclusão de usuário do controller
     success, error_message = delete_user(user_id)
