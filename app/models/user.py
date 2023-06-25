@@ -32,5 +32,6 @@ class Token(db.Model):
     def expires_formatted(self):
         return self.expires_at.strftime('%d/%m/%Y %H:%M:%S')
     
+    @property
     def expires_timestamp(self):
         return int(self.expires_at.timestamp())
