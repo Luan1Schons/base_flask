@@ -2,6 +2,7 @@ from app.models.user import User
 from app import db
 from app.helpers.utils import Utils
 from sqlalchemy.exc import SQLAlchemyError
+from flask_restful import marshal, fields
 
 def create_user(username, email, password):
     user = User(username=username, email=email, password=password)
@@ -63,4 +64,25 @@ def delete_user(user_id):
         db.session.rollback()
         error_message = Utils.get_error_message(e)
         return False, error_message
+    
+def users_list(page, per_page):
+    try:
+        # Realize a consulta paginada usando o SQLAlchemy ORM
+        users_query = User.query
+        total_users = users_query.count()
+        users = users_query.paginate(page=page, per_page=per_page).items
+        if users:
+
+            user_fields = {
+                'id': fields.Integer,
+                'username': fields.String,
+                'email': fields.String
+            }
+
+            serialized_users = [marshal(user, user_fields) for user in users]
+            return serialized_users, total_users, None
+        return None, 0, "Nenhum usuário encontrado"
+    except Exception as e:
+        error_message = Utils.get_error_message(e)
+        return None, 0, error_message
     

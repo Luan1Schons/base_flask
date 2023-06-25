@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from app.helpers.json import Json
-from app.controllers.user_controller import create_user, get_user, update_user, delete_user
+from app.controllers.user_controller import create_user, get_user, update_user, delete_user, users_list
 from flask_jwt_extended import get_jwt_identity
 from app.helpers.jwt import validate_token
 
@@ -21,6 +21,21 @@ def details_logged_user_route():
     else:
         return Json.response(message='Usuario não encontrado.', status_code=404)
 
+@users_bp.route('/users/list', methods=['GET'])
+@validate_token
+def list_users_route():
+    page = request.args.get('page', default=1, type=int)
+    per_page = request.args.get('per_page', default=10, type=int)
+
+    # Chamar a função de listagem de usuários do controller
+    users, total_users, error_message = users_list(page, per_page)
+    
+    if users:
+        return Json.response(data={"page":users,"total_users": total_users} , message='Usuários listados com sucesso.', status_code=200)
+    else:
+        return Json.response(message='Erro ao listar usuários.', status_code=422, error=error_message)
+
+    
 @users_bp.route('/users', methods=['POST'])
 @validate_token
 def create_user_route():
