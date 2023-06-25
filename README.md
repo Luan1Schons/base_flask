@@ -6,9 +6,11 @@ para facilitar o meu uso diário com desenvolvimento.
 ## Contém um Front-End utilizando Vue.js 3 para realizar a integração entre back-end e front-end
 - Interceptors configurados para tratar erros, sempre enviar o bearer token, mostrar notificações de erros usando o Toastify.
 - Camadas de proteções no back-end para revogar tokens, expiração, validar token em todas rotas privadas.
+- Tokens JWT Armazenados em Cookies com a flag httpOnly para previnir XSS
 - Migrações do banco de dados, seguindo normalização de dados 1 e 2
 - Configuração inicial dos arquivos de configuração (config.py)
 - Rotas padrão configurada atendendo normas Rest Api
+- Servidor Python WSGI HTTP Gucicorn e banco de dados MySQL
 
 As seguintes ferramentas foram usadas na
 ## Pré-requisitos
@@ -34,7 +36,14 @@ As seguintes ferramentas foram usadas na
     npm run dev
    ```
 
-3. Faça bom uso...
+5. Build dos containers docker e suba o servidor
+```bash
+  docker compose up --build -d
+
+  # Acesse http://localhost:5000
+  ```
+
+4. Faça bom uso...
 - Dentro da pasta App contém exemplos de utilização do framework.
 - Dentro da pasta frontend contém um frontend de exemplo que autentica usuários utilizando Jwt Token
 
