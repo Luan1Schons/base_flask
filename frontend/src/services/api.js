@@ -1,7 +1,7 @@
 import router from '@/router';
 import axios from 'axios';
 import { toast } from 'vue3-toastify';
-import { getTokenFromLocalStorage, setTokenFromLocalStorage } from '../utils/authUtils.js';
+import { setTokenInCookie, getTokenFromCookie } from '../utils/authUtils.js';
 
 import 'vue3-toastify/dist/index.css';
 
@@ -10,10 +10,9 @@ const api = axios.create({
 });
 
 // Interceptor para adicionar o token JWT ao cabeçalho de todas as requisições
-// Interceptor para adicionar o token JWT ao cabeçalho de todas as requisições
 api.interceptors.request.use(
   config => {
-    const token = getTokenFromLocalStorage();
+    const token = getTokenFromCookie();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -28,21 +27,20 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   response => {
     const data = response.data.data;
-    if (data && data.message) {
+    if (typeof data.message !== "undefined") {
       toast.success(data.message);
     }
-    if (data && data.token) {
-      toast.success('Usuário autenticado com sucesso');
-      setTokenFromLocalStorage(data.token, data.expires);
+    if (typeof data.token !== "undefined") {
+      toast.success("Usuário autenticado com sucesso");
+      // Set the JWT in a secure HttpOnly cookie
+      setTokenInCookie(data.token, data.expires);
     }
     return response;
   },
   error => {
     if (error.response) {
       const data = error.response.data;
-      if (data && data.message) {
-        toast.error(data.message);
-      }
+      toast.error(data.message);
 
       if (error.response.status === 401) {
         router.push('/login');
