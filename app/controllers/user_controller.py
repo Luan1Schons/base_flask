@@ -65,12 +65,16 @@ def delete_user(user_id):
         error_message = Utils.get_error_message(e)
         return False, error_message
     
-def users_list(page, per_page):
+def users_list(page, per_page, sort_by, sort_order):
     try:
-        # Realize a consulta paginada usando o SQLAlchemy ORM
-        users_query = User.query
-        total_users = users_query.count()
-        users = users_query.paginate(page=page, per_page=per_page).items
+        # Defina a ordenação com base nos parâmetros recebidos
+        sort_column = getattr(User, sort_by) if hasattr(User, sort_by) else User.username
+        sort_direction = getattr(sort_column, sort_order.lower(), 'asc')
+
+        users_query = User.query.order_by(sort_direction()).paginate(page=page, per_page=per_page)
+        total_users = users_query.total
+        users = users_query.items
+
         if users:
 
             user_fields = {

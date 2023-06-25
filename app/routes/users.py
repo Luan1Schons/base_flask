@@ -26,12 +26,21 @@ def details_logged_user_route():
 def list_users_route():
     page = request.args.get('page', default=1, type=int)
     per_page = request.args.get('per_page', default=10, type=int)
-
+    sort_by = request.args.get('sort_by', default='username', type=str)
+    sort_order = request.args.get('sort_order', default='asc', type=str)
     # Chamar a função de listagem de usuários do controller
-    users, total_users, error_message = users_list(page, per_page)
+    users, total_users, error_message = users_list(page, per_page, sort_by, sort_order)
     
     if users:
-        return Json.response(data={"page":users,"total_users": total_users} , message='Usuários listados com sucesso.', status_code=200)
+        last_page = int(total_users / per_page) + (total_users % per_page > 0)
+        response_data = {
+            "list": users,
+            "total_users": total_users,
+            "current_page": page,
+            "next_page": page + 1 if page < last_page else None,
+            "last_page": last_page
+        }
+        return Json.response(data=response_data, status_code=200)
     else:
         return Json.response(message='Erro ao listar usuários.', status_code=422, error=error_message)
 
