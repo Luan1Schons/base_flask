@@ -28,6 +28,7 @@ def list_users_route():
     per_page = request.args.get('per_page', default=10, type=int)
     sort_by = request.args.get('sort_by', default='username', type=str)
     sort_order = request.args.get('sort_order', default='asc', type=str)
+    
     # Chamar a função de listagem de usuários do controller
     users, total_users, error_message = users_list(page, per_page, sort_by, sort_order)
     
