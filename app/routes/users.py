@@ -7,6 +7,7 @@ from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 users_bp = Blueprint('users', __name__)
 
 @users_bp.route('/users', methods=['POST'])
+@jwt_required()
 def create_user_route():
     # Obter dados da requisição
     username = request.json['username']
@@ -34,6 +35,7 @@ def get_user_route(user_id):
         return Json.response(message='Usuario não encontrado.', status_code=404)
 
 @users_bp.route('/users/<int:user_id>', methods=['PUT'])
+@jwt_required()
 def update_user_route(user_id):
     # Obter dados da requisição
     username = request.json['username']
@@ -48,6 +50,7 @@ def update_user_route(user_id):
         return Json.response(message='Erro ao atualizar usuário', status_code=422, error=error_message)
 
 @users_bp.route('/users/<int:user_id>', methods=['DELETE'])
+@jwt_required()
 def delete_user_route(user_id):
     # Chamar a função de exclusão de usuário do controller
     success, error_message = delete_user(user_id)
