@@ -3,6 +3,14 @@
 Surgiu a necessidade de uma aplicação em flask para autenticar usuários via jwt, portanto criei este micro-framework com migrations, models e controllers
 para facilitar o meu uso diário com desenvolvimento.
 
+## Contém um Front-End utilizando Vue.js 3 para realizar a integração entre back-end e front-end
+- Interceptors configurados para tratar erros, sempre enviar o bearer token, mostrar notificações de erros usando o Toastify.
+- Camadas de proteções no back-end para revogar tokens, expiração, validar token em todas rotas privadas.
+- Migrações do banco de dados, seguindo normalização de dados 1 e 2
+- Configuração inicial dos arquivos de configuração (config.py)
+- Rotas padrão configurada atendendo normas Rest Api
+
+As seguintes ferramentas foram usadas na
 ## Pré-requisitos
 
 - [Python]
