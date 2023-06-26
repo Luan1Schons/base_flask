@@ -6,7 +6,8 @@ export function setTokenInCookie(token, expires) {
     sameSite: 'strict',
     httpOnly: true
   }
-  document.cookie = `jwt=${token}; path=/; Secure;`
+  document.cookie = `jwt=${token}; expires=${expires}; path=/; Secure;`
+  document.cookie = `expires=${expires}; path=/; Secure;`
 }
 
 export function getTokenFromCookie() {
@@ -19,6 +20,7 @@ export function getTokenFromCookie() {
       return token
     }
   }
-
   return null
 }
+
+

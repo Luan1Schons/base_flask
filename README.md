@@ -38,6 +38,7 @@ As seguintes ferramentas foram usadas na
 
 5. Build dos containers docker e suba o servidor
 ```bash
+  renomeie o arquivo docker-compose-base.yml para docker-compose.yml e o arquivo configs_base.py para configs.py
   docker compose up --build -d
 
   # Acesse http://localhost:5000

@@ -36,10 +36,7 @@ api.interceptors.response.use(
     if (typeof data.token !== 'undefined') {
       toast.success('Usuário autenticado com sucesso')
       // Set the JWT in a secure HttpOnly cookie
-      console.log(data.token)
-      setTokenInCookie(data.token, data.expires)
-
-      console.log(getTokenFromCookie())
+      setTokenInCookie(data.token)
     }
     return response
   },

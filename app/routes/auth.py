@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from app.helpers.json import Json
 from flask_jwt_extended import get_jwt_identity
-from app.controllers.auth_controller import auth_user, logout_user
+from app.controllers.auth_controller import auth_user, logout_user, regen_token
 from app.controllers.user_controller import get_user
 from app.helpers.jwt import validate_token
 
@@ -22,12 +22,10 @@ def auth_route():
         return Json.response(message=message, status_code=401)
 
 @auth_bp.route('/auth/regenerate-token', methods=['POST'])
+@validate_token
 def regenerate_token_route():
-    # Obter dados da requisição
-    email = request.json['email']
-    password = request.json['password']
-
-    token, expires, message = auth_user(email, password)
+    current_user = get_jwt_identity()
+    token, expires, message = regen_token(current_user)
 
     if token:
         return Json.response(data={'token': token, 'expires': expires}, status_code=201)

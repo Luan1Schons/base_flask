@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { getTokenFromCookie } from '../utils/authUtils.js'
+import jwt_decode from "jwt-decode";
+import { getTokenFromCookie, setTokenInCookie } from '../utils/authUtils.js'
 import { base_url } from '../config.js'
 
 const api = axios.create({
@@ -28,10 +29,52 @@ export async function checkToken() {
 
 // Guarda de rota para verificar a autenticação
 export async function guardCheckAuth(to, from, next) {
-  const token = await checkToken()
-  if (token) {
-    next()
-  } else {
-    next('/login')
+  try {
+    const expired = await checkExpires(); // Aguarda a verificação assíncrona do token expirado
+    if (expired) {
+      // Token expirado, redirecionar para a página de login
+      next('/login');
+    } else {
+      // Token válido, permitir o acesso à rota
+      next();
+    }
+  } catch (error) {
+    // Erro ao decodificar o token, redirecionar para a página de login
+    next('/login');
   }
 }
+
+
+// Se o token estiver expirado, regenera o token
+export async function checkExpires(to, from, next) {
+  const token = getTokenFromCookie();
+  if (!token) {
+    return true;
+  }
+
+  try {
+
+    const decoded = jwt_decode(token);
+    const expires = decoded.exp;
+
+    // Token expirou
+    if (expires && expires < Date.now() / 1000) {
+      try {
+        const response = await api.post('/auth/regenerate-token', null, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        const data = response.data;
+        setTokenInCookie(data.token);
+      } catch (error) {
+        return true;
+      }
+    }
+
+    return false;
+  } catch (error) {
+    return false;
+  }
+}
+
