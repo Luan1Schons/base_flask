@@ -29,6 +29,35 @@ body {
 .main {
   height: 100vh;
 }
+
+/* Classes para padding horizontal */
+.px-0 {
+  padding: 0px !important;
+}
+.px-1 {
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+.px-2 {
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+
+/* Classes para margin horizontal */
+.mx-1 {
+  margin-left: 1px;
+  margin-right: 1px;
+}
+
+.mx-2 {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+
+
 /* width, height */
 .w-100 {
   width: 100%;

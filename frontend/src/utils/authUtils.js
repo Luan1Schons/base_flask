@@ -1,4 +1,4 @@
-export function setTokenInCookie(token, expires) {
+export function setTokenInCookie(token) {
   const date = new Date(expires * 1000)
   const options = {
     expires: date,
@@ -6,8 +6,7 @@ export function setTokenInCookie(token, expires) {
     sameSite: 'strict',
     httpOnly: true
   }
-  document.cookie = `jwt=${token}; expires=${expires}; path=/; Secure;`
-  document.cookie = `expires=${expires}; path=/; Secure;`
+  document.cookie = `jwt=${token} path=/; Secure;`
 }
 
 export function getTokenFromCookie() {

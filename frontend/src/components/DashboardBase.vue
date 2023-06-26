@@ -1,11 +1,36 @@
 <template>
-  <div class="main">
-    <div class="container h-100 w-100">
-      <div class="row justify-content-center align-items-center h-100">
-        <div class="col-md-6">
-          <Card title="Administração">
-            <template #content> Dashboard </template>
-          </Card>
+  <div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <!-- Conteúdo da navbar aqui -->
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-3 px-0" style="padding:0;">
+          <div class="col-lg-9 px-0" style="padding:0;">
+            <div class="sidebar">
+              <ul class="menu">
+                <li class="menu-item">
+                  <div class="row justify-content-center align-items-center">
+                    <div class="col-lg-3">
+                      <div class="menu-item-icon">
+                          sds
+                      </div>
+                    </div>
+                    <div class="col-lg-9">
+                      <a href="#" class="menu-link">Home</a>
+                    </div>
+                  </div>
+                </li>
+                <li class="menu-item"><a href="#" class="menu-link">Usuários</a></li>
+                <!-- Adicione mais itens conforme necessário -->
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-9">
+          <div class="main-content">
+            <!-- Conteúdo principal aqui -->
+          </div>
         </div>
       </div>
     </div>
@@ -13,22 +38,57 @@
 </template>
 
 <script>
-import InputField from './inputs/InputField.vue'
-import Button from './buttons/Button.vue'
-import Card from './Card.vue'
-import router from '@/router'
-
+import icon from './icons/Icon.vue'
 export default {
+  name: 'Dashboard',
   components: {
-    InputField,
-    Button,
-    Card
-  },
-  data() {
-    return {}
-  },
-  methods: {}
+    icon,
+  }
 }
 </script>
 
-<style></style>
+<style>
+.sidebar {
+  background-color: #f8f9fa;
+  height: 100vh;
+  padding: 20px;
+}
+
+.menu {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+.menu-item {
+  background-color: #e9ecef;
+  margin-bottom: 10px;
+  border-radius: 20px;
+}
+
+.menu-item a {
+  color: #000;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.menu-item a:hover {
+  color: #fff;
+}
+
+.menu-link {
+  display: block;
+  background-color: #e9ecef;
+  /* Cor de fundo para cada item do menu */
+  color: #000;
+  text-decoration: none;
+  border-radius: 20px;
+}
+
+.menu-link:hover {
+  background-color: #ff0040;
+  /* Cor de fundo ao passar o mouse */
+  color: #fff;
+  /* Cor do texto ao passar o mouse */
+}
+</style>
