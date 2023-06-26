@@ -46,3 +46,16 @@ def logout_route():
         return Json.response(message="Usuário deslogado.", status_code=200)
     else:
         return Json.response(message="Não foi possível efetuar o logout", status_code=401)
+    
+@auth_bp.route('/auth/validate', methods=['POST'])
+@validate_token
+def validate_token_route():
+    # Obter dados da requisição
+    current_user = get_jwt_identity()
+    # Chamar a função de criação de usuário do controller
+    user = get_user(current_user)
+    # Verificar se o usuário foi encontrado
+    if user:
+        return Json.response(message="Token validado com sucesso.", status_code=200)
+    else:
+        return Json.response(message='Usuario não encontrado.', status_code=404)
