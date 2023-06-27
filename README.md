@@ -24,7 +24,7 @@ para facilitar o meu uso diário com desenvolvimento.
 
    O Traefik cuida do roteamento e balanceamento de carga, o Nginx lida com os recursos estáticos e caching, e o Gunicorn executa o código Python
 
-As seguintes ferramentas foram usadas na
+
 ## Pré-requisitos
 - [Node]
 - [Python]
