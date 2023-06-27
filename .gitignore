@@ -1,6 +1,6 @@
 # Ignorar pastas __pycache__ em qualquer diretório /migrations
 __pycache__/
-
+migrations/
 # Ignorar o arquivo /configs.py
 /configs.py
 
