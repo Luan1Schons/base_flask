@@ -1,7 +1,8 @@
+from datetime import datetime, timedelta
+from flask_jwt_extended import create_access_token
 from app.models.user import User, Token
 from app import db
-from flask_jwt_extended import create_access_token
-from datetime import datetime, timedelta
+
 
 def auth_user(email, password):
     # Verificar se o usuário existe
@@ -31,7 +32,8 @@ def auth_user(email, password):
 
         return access_token, token.expires_timestamp, None
     else:
-        return False, None, 'Usuário não encontrado'
+        return False, None, "Usuário não encontrado"
+
 
 def regen_token(user_id):
     # Verificar se o usuário existe
@@ -61,7 +63,7 @@ def regen_token(user_id):
 
         return access_token, token.expires_timestamp, None
     else:
-        return False, None, 'Usuário não encontrado'
+        return False, None, "Usuário não encontrado"
 
 
 def logout_user(user_id):
