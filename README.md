@@ -10,7 +10,19 @@ para facilitar o meu uso diário com desenvolvimento.
 - Migrações do banco de dados, seguindo normalização de dados 1 e 2
 - Configuração inicial dos arquivos de configuração (config.py)
 - Rotas padrão configurada atendendo normas Rest Api
-- Servidor Python WSGI HTTP Gucicorn e banco de dados MySQL
+- Servidor Python WSGI HTTP Gucicorn e nginx com proxy pass e otimizações de segurança e conteúdo.
+- Banco de dados MySQL
+- Geração de certificados ssl em desenvolvimento local
+
+# Poder, Segurança, Escalabilidade e Perfomance
+
+   . Traefik como proxy reverso: O Traefik é um poderoso proxy reverso que oferece recursos avançados de roteamento e balanceamento de carga. Ele permite gerenciar de forma fácil e automática a rota das solicitações para diferentes serviços, incluindo balanceamento de carga, redirecionamentos, tratamento de SSL/TLS, entre outros. O Traefik facilita a configuração de várias aplicações e a adição ou remoção de serviços sem a necessidade de atualizar manualmente a configuração do proxy.
+
+   . Nginx para recursos estáticos e caching: O Nginx é conhecido por sua eficiência ao servir arquivos estáticos e pode melhorar o desempenho do seu aplicativo ao lidar com esses recursos. Além disso, o Nginx também oferece recursos de caching, que podem ajudar a reduzir a carga no seu aplicativo e melhorar o tempo de resposta para solicitações repetidas.
+
+   . Gunicorn como servidor WSGI: O Gunicorn é um servidor WSGI (Web Server Gateway Interface) que lida com as solicitações HTTP recebidas pelo seu aplicativo Python. Ele fornece um ambiente robusto para a execução do seu aplicativo Python, gerenciando threads e processos para atender às solicitações dos clientes.
+
+   O Traefik cuida do roteamento e balanceamento de carga, o Nginx lida com os recursos estáticos e caching, e o Gunicorn executa o código Python
 
 As seguintes ferramentas foram usadas na
 ## Pré-requisitos

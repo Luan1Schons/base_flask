@@ -1,65 +1,52 @@
-import router from '@/router'
-import axios from 'axios'
-import { base_url } from '../config.js'
-import { toast } from 'vue3-toastify'
-import { setTokenInCookie, getTokenFromCookie } from '../utils/authUtils.js'
-
-import 'vue3-toastify/dist/index.css'
+import axios from 'axios';
+import { router } from '@/router';
+import { base_url } from '../config.js';
+import { setTokenInCookie, getTokenFromCookie } from '../utils/authUtils.js';
 
 const api = axios.create({
   baseURL: base_url
-})
+});
 
-// Interceptor para adicionar o token JWT ao cabeçalho de todas as requisições
-// Não é necessário enviar o token dessa forma em todas as requisições por conta do token estar em cookie,
-// mas por motivos de personalização e flexibilidade sobre os interceptors do axios, realizei dessa forma.
 api.interceptors.request.use(
   (config) => {
-    const token = getTokenFromCookie()
+    const token = getTokenFromCookie();
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+      config.headers.Authorization = `Bearer ${token}`;
     }
-    return config
+    return config;
   },
   (error) => {
-    return Promise.reject(error)
+    return Promise.reject(error);
   }
-)
+);
 
-// Interceptor para tratar todas as respostas de erro
 api.interceptors.response.use(
   (response) => {
-    const data = response.data.data
-    if (typeof data.message !== 'undefined') {
-      toast.success(data.message)
+    const data = response.data.data;
+    if (data && data.token) {
+      setTokenInCookie(data.token);
     }
-    if (typeof data.token !== 'undefined') {
-      toast.success('Usuário autenticado com sucesso')
-      // Set the JWT in a secure HttpOnly cookie
-      setTokenInCookie(data.token)
-    }
-    return response
+    return response;
   },
   (error) => {
     if (error.response) {
-      const data = error.response.data
-      toast.error(data.message)
-
+      const data = error.response.data;
+      // Faça alguma coisa com a mensagem de erro
       if (error.response.status === 401) {
-        router.push('/login')
+        router.push('/login');
       }
     } else if (error.request) {
-      console.log('Erro de solicitação:', error.request)
+      console.error('Erro de solicitação:', error.request);
     } else {
-      console.log('Erro:', error.message)
+      console.error('Erro:', error.message);
     }
 
-    return Promise.reject(error)
+    return Promise.reject(error);
   }
-)
+);
 
 export default {
   install(app) {
-    app.config.globalProperties.$axios = api
+    app.config.globalProperties.$axios = api;
   }
-}
+};
