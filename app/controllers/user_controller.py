@@ -4,6 +4,7 @@ from app import db
 from app.models.user import User
 from app.helpers.utils import Utils
 
+
 def create_user(username, email, password):
     user = User(username=username, email=email, password=password)
 
@@ -26,8 +27,7 @@ def get_user(user_id):
             "email": user.email,
         }
         return user_data
-    else:
-        return None
+    return None
 
 
 def update_user(user_id, username, email):
@@ -95,6 +95,6 @@ def users_list(page, per_page, sort_by, sort_order):
             serialized_users = [marshal(user, user_fields) for user in users]
             return serialized_users, total_users, None
         return None, 0, "Nenhum usuário encontrado"
-    except Exception as e:
+    except SQLAlchemyError as e:
         error_message = Utils.get_error_message(e)
         return None, 0, error_message

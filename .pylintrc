@@ -12,7 +12,9 @@ disable =
     too-many-branches,
     too-many-statements,
     import-outside-toplevel,
-    import-error
+    import-error,
+    too-few-public-methods,
+    cyclic-import
 
 [TYPECHECK]
 
