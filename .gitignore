@@ -1,12 +1,30 @@
-/migrations
+# Ignorar pastas __pycache__ em qualquer diretório /migrations
+__pycache__/
+
+# Ignorar o arquivo /configs.py
 /configs.py
-/.venv
-/__pycache__/
-/.vscode
-/frontend/node_modules
-/frontend/.vscode
-/node_modules
+
+# Ignorar a pasta /.venv
+/.venv/
+
+# Ignorar a pasta /.vscode
+/.vscode/
+
+# Ignorar a pasta /frontend/node_modules
+/frontend/node_modules/
+
+# Ignorar a pasta /frontend/.vscode
+/frontend/.vscode/
+
+# Ignorar a pasta /node_modules
+/node_modules/
+
+# Ignorar os arquivos docker-compose.yml e docker-compose-prod.yml
 docker-compose.yml
 docker-compose-prod.yml
+
+# Ignorar o arquivo configs.py
 configs.py
+
+# Ignorar a pasta /server/letsencrypt/
 /server/letsencrypt/
