@@ -31,8 +31,7 @@ def auth_user(email, password):
         db.session.commit()
 
         return access_token, token.expires_timestamp, None
-    else:
-        return False, None, "Usuário não encontrado"
+    return False, None, "Usuário não encontrado"
 
 
 def regen_token(user_id):
@@ -62,8 +61,7 @@ def regen_token(user_id):
         db.session.commit()
 
         return access_token, token.expires_timestamp, None
-    else:
-        return False, None, "Usuário não encontrado"
+    return False, None, "Usuário não encontrado"
 
 
 def logout_user(user_id):
