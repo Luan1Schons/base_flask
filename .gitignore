@@ -11,6 +11,7 @@ __pycache__/
 # Ignorar a pasta /.venv
 /.venv/
 
+.env
 # Ignorar a pasta /.vscode
 /.vscode/
 
