@@ -1,10 +1,9 @@
 import axios from 'axios'
 import jwt_decode from "jwt-decode";
 import { getTokenFromCookie, setTokenInCookie } from '../utils/authUtils.js'
-import { base_url } from '../config.js'
 
 const api = axios.create({
-  baseURL: base_url
+  baseURL: import.meta.env.VITE_API_BASE_URL
 })
 
 // Verifica se o token é valido e retorna um booleano

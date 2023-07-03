@@ -1,10 +1,9 @@
 import axios from 'axios';
-import { router } from '@/router';
-import { base_url } from '../config.js';
 import { setTokenInCookie, getTokenFromCookie } from '../utils/authUtils.js';
+import router  from '@/router';
 
 const api = axios.create({
-  baseURL: base_url
+  baseURL: import.meta.env.VITE_API_BASE_URL
 });
 
 api.interceptors.request.use(

@@ -30,5 +30,5 @@ docker-compose-prod.yml
 # Ignorar o arquivo configs.py
 configs.py
 
-# Ignorar a pasta /server/letsencrypt/
-/server/letsencrypt/
+# Ignorar a pasta /server/certs/
+/server/certs/
