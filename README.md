@@ -1,4 +1,4 @@
-# Micro Framework API Rest com JWT Token e frontend em Vue.js
+# Micro Framework API Rest com JWT Token e frontend em Vue.js com Quasar Framework
 
 Surgiu a necessidade de uma aplicação em flask para autenticar usuários via jwt, portanto criei este micro-framework com migrations, models e controllers
 para facilitar o meu uso diário com desenvolvimento.
@@ -12,7 +12,7 @@ para facilitar o meu uso diário com desenvolvimento.
 - Rotas padrão configurada atendendo normas Rest Api
 - Servidor Python WSGI HTTP Gunicorn e nginx com proxy pass e otimizações de segurança e conteúdo.
 - Banco de dados MySQL
-- Geração de certificados ssl em desenvolvimento local
+- Geração de certificados ssl em desenvolvimento local e produção
 
 # Poder, Segurança, Escalabilidade e Perfomance
 
@@ -49,8 +49,8 @@ para facilitar o meu uso diário com desenvolvimento.
 
 5. Build dos containers docker e suba o servidor
 ```bash
-  renomeie o arquivo docker-compose-base.yml para docker-compose.yml e o arquivo configs_base.py para configs.py
-  docker compose up --build -d
+   renomeie o .env-local para .env e configure com os seus dados
+   sh ./start.sh
 
   # Acesse http://localhost:5000
   ```

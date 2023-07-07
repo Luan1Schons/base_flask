@@ -1,7 +1,12 @@
 #!/bin/bash
 
+# Carrega as variáveis do arquivo .env
+if [ -f .env ]; then
+    export $(grep -v '^#' .env | xargs)
+fi
+
 # Verifica se o mkcert está instalado
-if !dpkg -s "mkcert" >/dev/null 2>&1; then
+if ! dpkg -s "mkcert" >/dev/null 2>&1; then
   echo "O mkcert não está instalado. Instalando..."
 
   # Verifica o sistema operacional e usa o gerenciador de pacotes apropriado
@@ -24,7 +29,7 @@ cd "$certs_dir"
 
 # Gera os certificados com mkcert
 mkcert -install >/dev/null 2>&1
-mkcert -cert-file crt.pem -key-file key.pem app.local >/dev/null 2>&1
+mkcert -cert-file crt.pem -key-file key.pem "$API_URL" >/dev/null 2>&1
 
 echo "Certificados gerados em $certs_dir"
 cd ../../
