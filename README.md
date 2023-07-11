@@ -40,11 +40,12 @@ para facilitar o meu uso diário com desenvolvimento.
 2. Instale as dependencias
 ```bash
     pip install -r requirements.txt
+    cd quasar/frontend
     npm install
-    npm run build
+    quasar build
 
-    # Inicie o ambiente de desenvolvimento com
-    npm run dev
+    # Inicie o ambiente de desenvolvimento com ssr
+    quasar dev -m ssr
    ```
 
 5. Build dos containers docker e suba o servidor

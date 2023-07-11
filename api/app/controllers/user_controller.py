@@ -1,7 +1,9 @@
 from sqlalchemy.exc import SQLAlchemyError
 from flask_restful import marshal, fields
 from app import db
+from sqlalchemy import join
 from app.models.user import User
+from app.models.user_status import UserStatus
 from app.helpers.utils import Utils
 
 
@@ -79,7 +81,7 @@ def users_list(page, per_page, sort_by, sort_order):
         )
         sort_direction = getattr(sort_column, sort_order.lower(), "asc")
 
-        users_query = User.query.order_by(sort_direction()).paginate(
+        users_query = User.query.join(UserStatus).order_by(sort_direction()).paginate(
             page=page, per_page=per_page
         )
         total_users = users_query.total
@@ -90,6 +92,9 @@ def users_list(page, per_page, sort_by, sort_order):
                 "id": fields.Integer,
                 "username": fields.String,
                 "email": fields.String,
+                "status_id": fields.Integer,
+                "status": fields.String(attribute=lambda user: user.status.description),
+                "created_at": fields.DateTime
             }
 
             serialized_users = [marshal(user, user_fields) for user in users]

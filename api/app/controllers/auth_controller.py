@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from werkzeug.security import check_password_hash
 from flask_jwt_extended import create_access_token
 from app.models.user import User, Token
 from app import db
@@ -6,10 +7,11 @@ from app import db
 
 def auth_user(email, password):
     # Verificar se o usuário existe
-    user = User.query.filter_by(email=email, password=password).first()
-    expires = timedelta(hours=1)
+    user = User.query.filter_by(email=email).first()
 
-    if user:
+    if user and check_password_hash(user.password, password):
+        expires = timedelta(hours=1)
+
         # Obter o token anterior, se existir
         previous_token = Token.query.filter_by(user_id=user.id).first()
         if previous_token:
@@ -31,6 +33,7 @@ def auth_user(email, password):
         db.session.commit()
 
         return access_token, token.expires_timestamp, None
+
     return False, None, "Usuário não encontrado"
 
 

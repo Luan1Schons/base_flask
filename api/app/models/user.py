@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from app import db
-
+from werkzeug.security import generate_password_hash
 
 class User(db.Model):
     __tablename__ = "users"
@@ -9,13 +9,20 @@ class User(db.Model):
     username = db.Column(db.String(255), unique=True)
     email = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(255))
+    status_id = db.Column(db.Integer, db.ForeignKey('users_status.id'), default=1)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     tokens = db.relationship("Token", backref="user", lazy="dynamic")
 
-    def __init__(self, username, email, password):
+    def __init__(self, username, email, password, status_id = 1):
+        from app.models.user_status import UserStatus
         self.username = username
         self.email = email
         self.password = password
+        self.status_id = status_id
+        self.set_password(password)
 
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
 
 class Token(db.Model):
     __tablename__ = "tokens"
